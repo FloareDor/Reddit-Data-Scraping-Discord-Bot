@@ -1,12 +1,31 @@
+from asyncio.tasks import wait
 from asyncio.windows_events import NULL
 import discord
 from discord.ext import commands
 import praw
 import random as rand
+import asyncio
+import speech_recognition as sr
+import pyttsx3
+import webbrowser
+import requests as req
+from youtubesearchpython import VideosSearch
+from bs4 import BeautifulSoup
+from pynput.keyboard import Controller,Key
+from googletrans import Translator
+from gtts import gTTS
+import os
+html_text = req.get("https://developers.google.com/admin-sdk/directory/v1/languages").text
+soup = BeautifulSoup(html_text, 'lxml')
+langs = soup.findAll('td')
+lang_Codes = []
+for lang in langs:
+    lang_Codes.append(lang.text.lower())
+trans = Translator()
 reddit = praw.Reddit(
-    client_id= 'my_client_ID',
-    client_secret= 'my_Secret_code',
-    user_agent='<yea, my thing again>'
+    client_id= 'mQiQTwEKfmKtDSWq0jHzyg',
+    client_secret= 'DrZG-CKbOkkGAzhSp59B5X3zAYu0tQ',
+    user_agent='<console:FLOARE:1.0>'
     #username = 'floaredorbot',
     #password = 'ramrajkisalute',
 )
@@ -99,6 +118,28 @@ async def synthhelp(ctx, type):
                         comment_lower = comment.body.lower()
                         #print("-----------")
                         ctx.send(comment.body)
+@client.command() # translation from english to most of the languages
+async def t(ctx,*,arg):
+    temp = str(arg)
+    lang_text = temp.split("to ")[1]
+    if lang_text in lang_Codes:
+        index = lang_Codes.index(lang_text)
+    code = lang_Codes[index+1]
+    final = temp.split("to ")[0]
+    #final = final.replace("translate", "")
+    #trans = Translator()
+    t = "yes"
+    try:
+        t = trans.translate(final, src = 'en', dest = code)
+    except AttributeError:
+        await ctx.send("oops")
+    
+    await ctx.send(t.text)
+    #output = ''
+    #for word in args:
+    #   output += word
+    #    output += ' '
+    #await client.send(output)
 
 @client.command()
 async def helpme(ctx):
@@ -106,5 +147,5 @@ async def helpme(ctx):
 meme - for memes
 amongusmeme - for among us memes :)
 valomeme - for valorant memes :)
-synthhelp - for virtual synthesizer help : )''')
-client.run("I shouldnt be revealing the run code")
+synthhelp - for virtual synthesizer help''')
+client.run("ODYyNzM0NzgyOTE5NzM3Mzg1.YOcqYQ.bInwyLJnJ-v-kwrtqZQ2XQpReNU")
