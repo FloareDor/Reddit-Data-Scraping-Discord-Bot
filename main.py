@@ -23,9 +23,9 @@ for lang in langs:
     lang_Codes.append(lang.text.lower())
 trans = Translator()
 reddit = praw.Reddit(
-    client_id= 'mQiQTwEKfmKtDSWq0jHzyg',
-    client_secret= 'DrZG-CKbOkkGAzhSp59B5X3zAYu0tQ',
-    user_agent='<console:FLOARE:1.0>'
+    client_id= 'mQiQTwEKfmKtSWq0Hzyg',
+    client_secret= 'DrZG-CKbOkkGAzhp595X3zAYu0tQ',
+    user_agent='<asiadfadf>'
     #username = 'floaredorbot',
     #password = 'ramrajkisalute',
 )
@@ -148,4 +148,5 @@ meme - for memes
 amongusmeme - for among us memes :)
 valomeme - for valorant memes :)
 synthhelp - for virtual synthesizer help''')
-client.run("ODYyNzM0NzgyOTE5NzM3Mzg1.YOcqYQ.bInwyLJnJ-v-kwrtqZQ2XQpReNU")
+TOKEN - "Secret_code"
+client.run(TOKEN)
