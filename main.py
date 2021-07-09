@@ -23,14 +23,14 @@ for lang in langs:
     lang_Codes.append(lang.text.lower())
 trans = Translator()
 reddit = praw.Reddit(
-    client_id= 'mQiQTwEKfmKtSWq0Hzyg',
-    client_secret= 'DrZG-CKbOkkGAzhp595X3zAYu0tQ',
-    user_agent='<asiadfadf>'
+    client_id= 'mQiQTwEKfmKtDSWq0jHzyg',
+    client_secret= 'DrZG-CKbOkkGAzhSp59B5X3zAYu0tQ',
+    user_agent='<console:FLOARE:1.0>'
     #username = 'floaredorbot',
     #password = 'ramrajkisalute',
 )
 search_limit = 50
-client = commands.Bot(command_prefix = ".")
+client = commands.Bot(command_prefix = ">")
 
 @client.event
 async def on_ready(ctx):
@@ -107,34 +107,53 @@ async def music(ctx):
     emb.set_image(url = url)
     await ctx.send(embed = emb)
 @client.command()
-async def synthhelp(ctx, type):
+async def synthhelp(ctx,*, arg):
     subreddit = reddit.subreddit("synthrecipes")
-    for submission in subreddit.hot(limit = 10):
-        if type in submission.title.lower():
+    for submission in subreddit.hot(limit = search_limit):
+        if str(arg).lower() in submission.title.lower():
             if submission.comments != NULL:
-                await ctx.send(submission.title)
+                await ctx.send(embed = discord.Embed(title = submission.title))
                 for comment in submission.comments:
                     if hasattr(comment, "body"):
                         comment_lower = comment.body.lower()
                         #print("-----------")
-                        ctx.send(comment.body)
-@client.command() # translation from english to most of the languages
+                        await ctx.send(comment.body)
+@client.command()
+async def quoteme(ctx):
+    ball_subs = []
+    #await ctx.send("Here's your meme, take it and leave.")
+    subreddit = reddit.subreddit("quotes")
+    for submission in subreddit.hot(limit=search_limit):
+        ball_subs.append(submission)
+        #print(submission.title)
+    random_sub = rand.choice(ball_subs)
+    name = random_sub.title
+    url = random_sub.url
+    emb = discord.Embed(title = name)
+    #emb.set_image(url = url)
+    await ctx.send(embed = emb)
+
+@client.command()
 async def t(ctx,*,arg):
     temp = str(arg)
     lang_text = temp.split("to ")[1]
+    index = lang_Codes.index('english (us)')
     if lang_text in lang_Codes:
         index = lang_Codes.index(lang_text)
     code = lang_Codes[index+1]
     final = temp.split("to ")[0]
+    src_code = trans.detect(final).lang
     #final = final.replace("translate", "")
     #trans = Translator()
     t = "yes"
     try:
-        t = trans.translate(final, src = 'en', dest = code)
+        t = trans.translate(final, src = src_code, dest = code)
     except AttributeError:
         await ctx.send("oops")
-    
-    await ctx.send(t.text)
+    if final == "fuck you":
+        await ctx.send("no, fuck you!")
+    else:
+        await ctx.send(t.text)
     #output = ''
     #for word in args:
     #   output += word
@@ -148,5 +167,4 @@ meme - for memes
 amongusmeme - for among us memes :)
 valomeme - for valorant memes :)
 synthhelp - for virtual synthesizer help''')
-TOKEN - "Secret_code"
-client.run(TOKEN)
+client.run("ODYyNzM0NzgyOTE5NzM3Mzg1.YOcqYQ.RbFeN9evFEeuH0O_45KSKPaBr_U")
