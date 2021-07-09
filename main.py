@@ -167,4 +167,5 @@ meme - for memes
 amongusmeme - for among us memes :)
 valomeme - for valorant memes :)
 synthhelp - for virtual synthesizer help''')
-client.run("ODYyNzM0NzgyOTE5NzM3Mzg1.YOcqYQ.RbFeN9evFEeuH0O_45KSKPaBr_U")
+TOKEN = "sEcRetTokEn
+client.run(TOKEN)
